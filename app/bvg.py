@@ -125,4 +125,4 @@ def get_issues(details=False):
     return results
 
 if __name__ == "__main__":
-    print json.dumps(get_issues(True), indent=2)
+    print json.dumps(get_issues(True), indent=4)

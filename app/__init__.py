@@ -26,7 +26,7 @@ def index():
     issues['request_url'] = request.url
     issues["date_updated"] = datetime.today().isoformat()
     
-    return Response(json.dumps(issues, indent=2), mimetype="application/json; charset=utf-8")
+    return Response(json.dumps(issues, indent=4), mimetype="application/json; charset=utf-8")
 
 if __name__ == "__main__":
     app.run()
