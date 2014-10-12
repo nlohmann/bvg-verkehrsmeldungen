@@ -7,8 +7,37 @@ import json
 from urlparse import urlparse
 from datetime import datetime
 
-def get_issues():
-    base_url = 'http://www.bvg.de/de/Fahrinfo/Verkehrsmeldungen'
+base_url = 'http://www.bvg.de/de/Fahrinfo/Verkehrsmeldungen'
+
+def get_details(url):
+    page = requests.get(url)
+    html = BeautifulSoup(page.text)
+
+    result = dict()
+
+    for dl in html.findAll('dl'):
+        column_number = 0
+
+        for dd in dl.findAll('dd'):
+            #print column_number, "-", dd.text
+            
+            if column_number == 1:
+                result['direction'] = dd.text
+
+            if column_number == 5:
+                result['description'] = dd.text
+            
+            if column_number == 6:
+                result['barrierfree'] = dd.text
+            
+            if dd.a:
+                result['url'] = base_url + dd.a['href']
+
+            column_number += 1
+
+    return result
+
+def get_issues(details=False):
     page = requests.get(base_url)
     html = BeautifulSoup(page.text)
 
@@ -25,7 +54,7 @@ def get_issues():
             "what": {},
             "when": {},
             "where": {},
-            "why": {}
+            "why": {} 
         }
 
         for table_column in table_row.findAll('td'):
@@ -76,6 +105,9 @@ def get_issues():
                 entry['why']['url'] = link
                 # use the id in the url as id
                 entry['id'] = int(urlparse(link)[4].replace("id=", ""))
+                
+                if details:
+                    entry['details'] = get_details(link)
 
             column_number += 1
 
@@ -85,7 +117,7 @@ def get_issues():
     issues = issues[1:]
 
     results = {
-        "source_url": base_url,
+        "source_root_url": base_url,
         "issue_count": len(issues),
         "issues": issues
     }
@@ -93,4 +125,4 @@ def get_issues():
     return results
 
 if __name__ == "__main__":
-    print json.dumps(get_issues(), indent=2)
+    print json.dumps(get_issues(True), indent=2)

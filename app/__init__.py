@@ -22,7 +22,7 @@ Compress(app)
 @app.route("/")
 @cache.cached(timeout=1800)
 def index():
-    issues = get_issues()
+    issues = get_issues(True)
     issues['request_url'] = request.url
     issues["date_updated"] = datetime.today().isoformat()
     
