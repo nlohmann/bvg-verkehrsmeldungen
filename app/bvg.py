@@ -12,7 +12,7 @@ def get_issues():
     page = requests.get(base_url)
     html = BeautifulSoup(page.text)
 
-    results = []
+    issues = []
 
     # parse the page's table containing all relevant information
     for table_row in html.findAll('tr'):
@@ -79,10 +79,16 @@ def get_issues():
 
             column_number += 1
 
-        results.append(entry)
+        issues.append(entry)
 
     # remove first entry (table headers)
-    results = results[1:]
+    issues = issues[1:]
+
+    results = {
+        "source_url": base_url,
+        "issue_count": len(issues),
+        "issues": issues
+    }
 
     return results
 

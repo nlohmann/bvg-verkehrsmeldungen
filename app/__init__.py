@@ -1,10 +1,11 @@
 # coding: utf8
 
 # everything for Flask
-from flask import Flask, Response
+from flask import Flask, Response, request
 from flask.ext.cache import Cache
 from flask.ext.compress import Compress
 
+from datetime import datetime
 from bvg import get_issues
 import json
 
@@ -21,7 +22,11 @@ Compress(app)
 @app.route("/")
 @cache.cached(timeout=1800)
 def index():
-    return Response(json.dumps(get_issues(), indent=2), mimetype="application/json; charset=utf-8")
+    issues = get_issues()
+    issues['request_url'] = request.url
+    issues["date_updated"] = datetime.today().isoformat()
+    
+    return Response(json.dumps(issues, indent=2), mimetype="application/json; charset=utf-8")
 
 if __name__ == "__main__":
     app.run()
