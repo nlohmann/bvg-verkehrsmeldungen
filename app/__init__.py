@@ -20,7 +20,7 @@ cache = Cache(app, config={'CACHE_TYPE': 'simple'})
 Compress(app)
 
 @app.route("/")
-@cache.cached(timeout=1800)
+@cache.cached(timeout=7200)
 def index():
     issues = get_issues(True)
     issues['request_url'] = request.url
