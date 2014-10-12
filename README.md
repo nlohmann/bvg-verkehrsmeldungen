@@ -1513,6 +1513,6 @@ Die App läuft unter Python und nutzt [Flask](http://flask.pocoo.org) und [Beaut
     source venv/bin/activate
     pip install -r requirements.txt
 
-## Danksagung
+## Lizenz
 
-Die Daten kommen von den [Berliner Verkehrsbetrieben](http://www.bvg.de/de/).
+Die stammen von den Webseiten der [Berliner Verkehrsbetriebe](http://www.bvg.de/de/). Eine Klärung der Nutzungsbedinungen steht noch aus. Die Nutzung dieses Programmes und der dadurch bereitgestellten API ist nur zum persönlichen privaten Gebrauch gestattet. Jede weitergehende Nutzung, insbesondere die gewerbliche Vervielfältigung, Verbreitung, oder Veröffentlichung zu gewerblichen Zwecken ist untersagt.
