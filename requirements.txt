@@ -4,7 +4,7 @@ Flask-Cache==0.13.1
 Flask-Compress==1.0.2
 Jinja2==2.7.3
 MarkupSafe==0.23
-Werkzeug==0.9.6
+Werkzeug==0.15.3
 itsdangerous==0.24
 requests==2.4.3
 wsgiref==0.1.2
